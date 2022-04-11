@@ -23,6 +23,6 @@ export class StockTableComponent implements OnInit {
   }
 
   public getTextStyle(value: number) {
-    return value > 0 ? 'good' : 'bad';
+    return value > 0 ? 'positive' : 'negative';
   }
 }
