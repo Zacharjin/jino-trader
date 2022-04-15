@@ -12,13 +12,21 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	runtimeOnly 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+project(":application") {
+    apply plugin: "java"
+    dependencies {
+        implementation project(":bussiness-logic")
+    }
+}
+
+project(":bussiness-logic") {
+    apply plugin: "java"
+}
+
+
