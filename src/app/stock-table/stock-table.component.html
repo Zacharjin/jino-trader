@@ -18,7 +18,8 @@
 
     <ng-container matColumnDef="change">
         <th mat-header-cell *matHeaderCellDef> Chg </th>
-        <td [ngClass]="getTextStyle(element.change)" mat-cell *matCellDef="let element"> {{element.change}} </td>
+        <td [ngClass]="getTextStyle(element.change)" mat-cell *matCellDef="let element"> {{element.change.toFixed(2)}}
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="changePercent">

@@ -1,4 +1,4 @@
-export interface StockValue {
+export interface StockCell {
     icon: string;
     position: number;
     name: string;
