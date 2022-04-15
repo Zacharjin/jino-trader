@@ -1,4 +1,4 @@
-import { Component,  ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ChartFactory } from './model/chart-factory';
 import 'chartjs-adapter-date-fns';
 import 'chartjs-chart-financial';
@@ -18,10 +18,10 @@ export class StockBoxChartComponent {
   initialDateStr = '2017-04-01T00:00:00';
 
   public financialChartData: ChartConfiguration['data'] = {
-    datasets: [ {
-      label: 'CHRT - Chart.js Corporation',
+    datasets: [{
+      label: 'APPL',
       data: this.getRandomData(this.initialDateStr, this.barCount)
-    } ]
+    }]
   };
 
   public financialChartOptions: ChartConfiguration['options'] = {
@@ -80,7 +80,7 @@ export class StockBoxChartComponent {
 
   getRandomData(dateStr: string, count: number): { c: number; x: number; h: number; l: number; o: number }[] {
     let date = parseISO(dateStr);
-    const data = [ this.randomBar(date, 30) ];
+    const data = [this.randomBar(date, 30)];
     while (data.length < count) {
       date = add(date, { days: 1 });
       if (date.getDay() <= 5) {

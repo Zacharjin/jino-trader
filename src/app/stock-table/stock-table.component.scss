@@ -1,0 +1,28 @@
+:host ::ng-deep mat-table{
+    background-color: black;
+    color: blanchedalmond;
+}
+
+:host ::ng-deep th, tr, td {
+    color: blanchedalmond;
+}
+
+::ng-deep th, tr, td{
+    padding-right: 30px !important;
+}
+
+img {
+    border-radius: 50%;
+}
+
+.negative {
+    color: red;
+}
+
+.positive {
+    color: greenyellow;
+}
+
+td, th{
+    text-align: right !important;
+  }
