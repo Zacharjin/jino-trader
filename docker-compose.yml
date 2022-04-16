@@ -1,23 +1,48 @@
 version: "3.5"
-services: 
+services:
+    frontend:
+       image: "jino-trader-frontend"
+       build: ./frontend
+       ports:
+          - "8080:80" 
     backend:
-       image: "jino-backend"
+       image: "jino-trader-backend"
        build: ./backend
        ports:
           - "8081:80"
        depends_on:
-          - postgres
-    frontend:
-       image: "jino-frontend"
-       build: ./frontend
-       ports:
-          - "8080:80"
-    postgres:
+          - backend-database
+          - queue
+    backend-database:
        image: "postgres:14.2"
        ports:
           - "5500:5443"
        volumes:
-          - postgres-data:/home/postgres/data
-          
+          - postgres-backend-data:/home/postgres/data
+    loader:
+       image: "jino-trader-loader"
+       build: ./loader
+       depends_on:
+          - loader-database
+          - queue    
+    loader-database:
+       image: "postgres:14.2"
+       ports:
+          - "5500:5443"
+       volumes:
+          - loader-postgres-data:/home/postgres/data   
+    queue:
+        image: rabbitmq:3-management-alpine
+        container_name: 'rabbitmq'
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - queue-data:/var/lib/rabbitmq/
+            - ~/queue/conf/log/:/var/log/rabbitmq
+        networks:
+            - rabbitmq_go_net
 volumes:
-    postgres-data:
+    backend-postgres-data:
+    loader-postgres-data:
+    queue-data:
