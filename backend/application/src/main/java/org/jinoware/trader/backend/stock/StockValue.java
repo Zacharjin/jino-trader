@@ -1,4 +1,4 @@
 package org.jinoware.trader.backend.stock;
 
-public class StockMessage {
+public class StockValue {
 }
