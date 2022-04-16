@@ -1,0 +1,23 @@
+version: "3.5"
+services: 
+    backend:
+       image: "jino-backend"
+       build: ./backend
+       ports:
+          - "8081:80"
+       depends_on:
+          - postgres
+    frontend:
+       image: "jino-frontend"
+       build: ./frontend
+       ports:
+          - "8080:80"
+    postgres:
+       image: "postgres:14.2"
+       ports:
+          - "5500:5443"
+       volumes:
+          - postgres-data:/home/postgres/data
+          
+volumes:
+    postgres-data:

@@ -1,5 +1,5 @@
 {
-  "name": "open-trader-frontend",
+  "name": "jino-trader-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

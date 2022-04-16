@@ -27,10 +27,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'open-trader-frontend'`, () => {
+  it(`should have as title 'jino-trader-frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('open-trader-frontend');
+    expect(app.title).toEqual('jino-trader-frontend');
   });
 
 });

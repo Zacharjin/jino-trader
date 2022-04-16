@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "open-trader-frontend": {
+    "jino-trader-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/open-trader-frontend",
+            "outputPath": "dist/jino-trader-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "open-trader-frontend:build:production"
+              "browserTarget": "jino-trader-frontend:build:production"
             },
             "development": {
-              "browserTarget": "open-trader-frontend:build:development"
+              "browserTarget": "jino-trader-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "open-trader-frontend:build"
+            "browserTarget": "jino-trader-frontend:build"
           }
         },
         "test": {
@@ -109,5 +109,5 @@
       }
     }
   },
-  "defaultProject": "open-trader-frontend"
+  "defaultProject": "jino-trader-frontend"
 }
