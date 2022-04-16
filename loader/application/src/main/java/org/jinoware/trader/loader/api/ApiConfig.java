@@ -1,4 +1,4 @@
-package org.jinoware.trader.loader.stock;
+package org.jinoware.trader.loader.api;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;

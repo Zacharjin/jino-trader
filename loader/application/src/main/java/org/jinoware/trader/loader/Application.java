@@ -1,12 +1,11 @@
 package org.jinoware.trader.loader;
 
-import org.jinoware.trader.loader.api.CompanyName;
-import org.jinoware.trader.loader.api.DailyPricesService;
-import org.springframework.boot.CommandLineRunner;
+import org.jinoware.trader.loader.company.Company;
+import org.jinoware.trader.loader.company.CompanyRepository;
+import org.jinoware.trader.loader.price.daily.DailyStockFetchService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @SpringBootApplication
 public class Application {
@@ -15,16 +14,10 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner run(DailyPricesService client){
-		return args -> {
-			client.findBy(new CompanyName("IBM"));
-		};
+	@Scheduled
+	public void scheduleDailySending(DailyStockFetchService service, CompanyRepository repository){
+		repository.findAll().stream()
+				.map(Company::getName)
+				.forEach(service::fetchDailyStock);
 	}
-
-	@Bean
-	public RestTemplate restTemplate(){
-		return new RestTemplate();
-	}
-
 }

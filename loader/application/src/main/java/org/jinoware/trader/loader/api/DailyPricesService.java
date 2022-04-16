@@ -5,25 +5,47 @@ import com.crazzyghost.alphavantage.parameters.OutputSize;
 import com.crazzyghost.alphavantage.timeseries.response.StockUnit;
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
 import lombok.AllArgsConstructor;
+import org.jinoware.trader.loader.price.daily.DailyPrice;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class DailyPricesService {
 
-    AlphaVantage alphaVantage;
+    AlphaVantage client;
 
 
-    public void findBy(CompanyName companyName){
-        TimeSeriesResponse timeSeriesResponse = alphaVantage.timeSeries()
+    public List<DailyPrice> findBy(CompanyName company){
+
+        List<StockUnit> stockUnits = fetchStockUnitsFor(company);
+
+        return convertToResult(stockUnits);
+    }
+
+    private List<StockUnit> fetchStockUnitsFor(CompanyName companyName) {
+        TimeSeriesResponse timeSeriesResponse = client.timeSeries()
                 .daily()
                 .forSymbol(companyName.getName())
                 .outputSize(OutputSize.FULL)
                 .fetchSync();
-        List<StockUnit> stockUnits = timeSeriesResponse.getStockUnits();
 
+        return  timeSeriesResponse.getStockUnits();
+    }
 
+    private List<DailyPrice> convertToResult(List<StockUnit> stockUnits) {
+        return stockUnits.stream().map(price -> {
+            Date day = Date.from(Instant.parse(price.getDate()));
+            return new DailyPrice(day,
+                    price.getOpen(),
+                    price.getHigh(),
+                    price.getLow(),
+                    price.getClose(),
+                    price.getVolume());
+        }).collect(Collectors.toList());
     }
 }

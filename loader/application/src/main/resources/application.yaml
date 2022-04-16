@@ -1,0 +1,16 @@
+spring:
+  queue:
+    host: queue
+    password: #{QUEUE_PASSWORD}
+    port: 15672
+    username: guest
+    daily:
+      exchange: stock.daily.exchange
+      queue: stock.queue
+      routingkey: stock.daily.routingkey
+  datasource:
+    url: jdbc:postgresql://loader-database:5432/public
+    username: postgres
+    password: postgres
+server:
+  port: 9091
