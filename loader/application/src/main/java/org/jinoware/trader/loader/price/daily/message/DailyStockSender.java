@@ -15,7 +15,7 @@ public class DailyStockSender {
     @Value("${spring.queue.daily.routingkey}")
     private String routingkey;
 
-    public void send(DailyStockBatch message){
+    public void send(DailyCompanyStockPriceHistory message){
         rabbitTemplate.convertAndSend(exchange,routingkey, message);
     }
 }

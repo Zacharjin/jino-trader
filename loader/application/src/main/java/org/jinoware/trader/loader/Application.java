@@ -14,10 +14,10 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Scheduled
-	public void scheduleDailySending(DailyStockFetchService service, CompanyRepository repository){
-		repository.findAll().stream()
+	@Scheduled(cron = "1 * * * * *")
+	public void scheduleDailyStockPricesFetching(DailyStockFetchService service, CompanyRepository companies){
+		companies.findAll().stream()
 				.map(Company::getName)
-				.forEach(service::fetchDailyStock);
+				.forEach(service::fetchDailyStockPrices);
 	}
 }
