@@ -16,6 +16,5 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'com.github.crazzyghost:alphavantage-java:1.6.2'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	runtimeOnly 'org.postgresql:postgresql'
 }
 

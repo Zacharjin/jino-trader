@@ -5,6 +5,7 @@ import com.crazzyghost.alphavantage.parameters.OutputSize;
 import com.crazzyghost.alphavantage.timeseries.response.StockUnit;
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
 import lombok.AllArgsConstructor;
+import org.jinoware.trader.loader.price.StockPrice;
 import org.jinoware.trader.loader.price.daily.DailyPrice;
 import org.springframework.stereotype.Component;
 
@@ -40,12 +41,13 @@ public class DailyPricesService {
     private List<DailyPrice> convertToResult(List<StockUnit> stockUnits) {
         return stockUnits.stream().map(price -> {
             Date day = Date.from(Instant.parse(price.getDate()));
-            return new DailyPrice(day,
+            StockPrice stockPrice = new StockPrice(
                     price.getOpen(),
                     price.getHigh(),
                     price.getLow(),
                     price.getClose(),
                     price.getVolume());
+            return new DailyPrice(day, stockPrice);
         }).collect(Collectors.toList());
     }
 }

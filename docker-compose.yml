@@ -10,6 +10,8 @@ services:
        build: ./backend
        ports:
           - "8081:80"
+       networks:
+          - messaging
        depends_on:
           - backend-database
           - queue
@@ -22,6 +24,8 @@ services:
     loader:
        image: "jino-trader-loader"
        build: ./loader
+       networks:
+          - messaging
        depends_on:
           - loader-database
           - queue    
@@ -32,16 +36,18 @@ services:
        volumes:
           - loader-postgres-data:/home/postgres/data   
     queue:
-        image: rabbitmq:3-management-alpine
-        container_name: 'rabbitmq'
+        image: "jino-trader-queue"
+        build: ./queue
         ports:
             - 5672:5672
             - 15672:15672
-        volumes:
-            - queue-data:/var/lib/rabbitmq/
-            - ~/queue/conf/log/:/var/log/rabbitmq
         networks:
-            - rabbitmq_go_net
+            - messaging
+
+networks: 
+    messaging:
+      driver: bridge
+
 volumes:
     backend-postgres-data:
     loader-postgres-data:
