@@ -2,7 +2,6 @@ package org.jinoware.trader.loader.data.daily;
 
 import lombok.AllArgsConstructor;
 import org.jinoware.trader.loader.api.CompanyName;
-import org.jinoware.trader.loader.data.StockPricesPerDay;
 import org.jinoware.trader.loader.price.StockPrice;
 import org.jinoware.trader.loader.price.daily.DailyPrice;
 import org.jinoware.trader.loader.price.daily.DailyStockStoreService;
@@ -24,7 +23,7 @@ public class DailyStockPriceStoreService implements DailyStockStoreService {
                 .orElse(new StockPricesPerDay(day, 0L, new ArrayList<>()));
 
         StockPrice price = data.getPrice();
-        dailyStock.updateDailyPrice(company, price);
+        dailyStock.addStockPrice(company, price);
         repository.save(dailyStock);
     }
 
