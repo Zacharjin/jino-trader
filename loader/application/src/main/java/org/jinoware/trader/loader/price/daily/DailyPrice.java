@@ -1,12 +1,13 @@
 package org.jinoware.trader.loader.price.daily;
 
 import lombok.Value;
-import org.jinoware.trader.loader.price.StockPrice;
+import org.jinoware.trader.loader.common.model.Day;
+import org.jinoware.trader.loader.common.model.StockPrice;
 
 import java.util.Date;
 
 @Value
 public class DailyPrice {
-    Date day;
+    Day day;
     StockPrice price;
 }

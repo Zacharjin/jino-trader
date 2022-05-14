@@ -1,7 +1,7 @@
 package org.jinoware.trader.loader.data.repository;
 
 import lombok.AllArgsConstructor;
-import org.jinoware.trader.loader.api.CompanyName;
+import org.jinoware.trader.loader.common.model.CompanyName;
 import org.jinoware.trader.loader.data.model.IdentifiableByCompanyName;
 import org.jinoware.trader.loader.data.model.UpdatePrice;
 
@@ -14,9 +14,9 @@ public class StockPriceRepository<T extends IdentifiableByCompanyName> {
 
     List<T> data;
 
-    public void upsert(CompanyName company,
-                       Supplier<T> provideEmptyStockPrice,
-                       UpdatePrice<T> operation){
+    public void insertOrUpdate(CompanyName company,
+                               Supplier<T> provideEmptyStockPrice,
+                               UpdatePrice<T> operation){
 
         T found = find(company)
                 .orElseGet(provideEmptyStockPrice);
@@ -32,7 +32,7 @@ public class StockPriceRepository<T extends IdentifiableByCompanyName> {
     }
 
     private void save(T stock) {
-        boolean companyIsNew = find(stock.getCompanyName()).isPresent();
+        boolean companyIsNew = !find(stock.getCompanyName()).isPresent();
         if(companyIsNew) {
             data.add(stock);
         }

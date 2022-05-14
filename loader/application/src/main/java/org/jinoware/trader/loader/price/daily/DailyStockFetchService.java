@@ -1,23 +1,25 @@
 package org.jinoware.trader.loader.price.daily;
 
 import lombok.AllArgsConstructor;
-import org.jinoware.trader.loader.api.CompanyName;
+import lombok.val;
+import org.jinoware.trader.loader.common.model.CompanyName;
 import org.jinoware.trader.loader.api.DailyPricesService;
+import org.jinoware.trader.loader.common.DailyStockStoreService;
+import org.jinoware.trader.loader.common.model.PricePerDay;
 import org.jinoware.trader.loader.price.daily.message.DailyCompanyStockPriceHistory;
 import org.jinoware.trader.loader.price.daily.message.DailyStockSender;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class DailyStockFetchService {
+
     private DailyPricesService pricesService;
     private DailyStockSender sender;
     private DailyStockStoreService stockStoreService;
+
     public void fetchDailyStockPrices(CompanyName company){
         DailyCompanyStockPriceHistory stockPrices = fetchStockPricesFor(company);
         store(stockPrices);
@@ -31,7 +33,10 @@ public class DailyStockFetchService {
 
     private void store(DailyCompanyStockPriceHistory stocks) {
         stocks.getData()
-                .forEach(data-> stockStoreService.store(stocks.getCompanyName(), data));
+                .forEach(data-> {
+                    val pricePerDay = new PricePerDay(data.getDay(), data.getPrice());
+                    stockStoreService.store(stocks.getCompanyName(), pricePerDay);
+                });
 
     }
 
@@ -40,9 +45,4 @@ public class DailyStockFetchService {
     }
 
 
-
-    private Map<Date, DailyPrice> groupByDay(List<DailyPrice> data) {
-        return data.stream()
-                .collect(Collectors.toMap(DailyPrice::getDay, v -> v));
-    }
 }

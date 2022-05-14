@@ -9,7 +9,7 @@ spring:
       queue: stock.queue
       routingkey: stock.daily.routingkey
   datasource:
-    url: mongodb://localhost:27017
+    url: mongodb://localhost:27017/loader
     database: loader
     username: postgres
     password: postgres

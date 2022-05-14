@@ -1,10 +1,10 @@
 package org.jinoware.trader.loader.data.temporal;
 
 import lombok.Value;
-import org.jinoware.trader.loader.api.CompanyName;
+import org.jinoware.trader.loader.common.model.CompanyName;
+import org.jinoware.trader.loader.common.model.StockPrice;
 import org.jinoware.trader.loader.data.model.UpdatePrice;
 import org.jinoware.trader.loader.data.repository.StockPriceRepository;
-import org.jinoware.trader.loader.price.StockPrice;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -36,7 +36,7 @@ public class TemporalStockPerDay {
             stock.getTicks().add(tick);
         };
 
-        repo.upsert(company,
+        repo.insertOrUpdate(company,
                 provideWhenNotFound,
                 thenUpdate);
     }
