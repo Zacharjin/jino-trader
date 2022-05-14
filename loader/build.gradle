@@ -33,6 +33,19 @@ allprojects {
 
 project(":application") {
     apply plugin: "java"
+
+    dependencies {
+        implementation project(':data')
+        implementation project(':common')
+    }
+}
+
+project(":data") {
+    apply plugin: "java"
+
+    dependencies {
+        implementation project(':common')
+    }
 }
 
 

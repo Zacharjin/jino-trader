@@ -1,4 +1,4 @@
-package org.jinoware.trader.loader.price;
+package org.jinoware.trader.loader.common.model;
 
 import lombok.Value;
 

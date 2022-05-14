@@ -3,8 +3,11 @@ package org.jinoware.trader.loader.data;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +27,19 @@ public class MongoConfiguration {
     String url;
     @Value("${spring.datasource.database}")
     String database;
+    @Value("${spring.datasource.username}")
+    String username;
+    @Value("${spring.datasource.password}")
+    String password;
 
     @Bean
     public MongoClient mongo() {
         ConnectionString connectionString = new ConnectionString(String.join("/", Arrays.asList(url ,database)));
+
+        MongoCredential credential = MongoCredential.createCredential(username, database, password.toCharArray());
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
+                .credential(credential)
                 .build();
 
         return MongoClients.create(mongoClientSettings);
